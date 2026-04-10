@@ -1,0 +1,14 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+
+# Usuario
+*.user
+*.suo
+
+# Archivos temporales
+*.log
+
+# Configuración sensible
+appsettings.Development.json
