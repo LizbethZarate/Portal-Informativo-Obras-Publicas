@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using PortalInforObrasPublicas.Data;
+using PortalInforObrasPublicas.Interfaces;
+using PortalInforObrasPublicas.Repositories;
+using PortalInforObrasPublicas.Services;
+
 namespace PortalInforObrasPublicas
 {
     public class Program
@@ -8,6 +14,21 @@ namespace PortalInforObrasPublicas
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("CadenaSql")));
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<UsuarioService>();
 
             var app = builder.Build();
 
@@ -23,12 +44,12 @@ namespace PortalInforObrasPublicas
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Login}/{id?}");
 
             app.Run();
         }
