@@ -1,0 +1,36 @@
+﻿.hero {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb);
+    color: white;
+    padding: 60px 20px;
+}
+
+.stats-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+}
+
+.search-box {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-top: -30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.obra-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+    .obra-card:hover {
+        transform: translateY(-5px);
+    }
+
+.progress {
+    height: 8px;
+    border-radius: 10px;
+}
