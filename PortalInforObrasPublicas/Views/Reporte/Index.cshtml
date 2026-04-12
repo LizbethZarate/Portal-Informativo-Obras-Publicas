@@ -1,0 +1,25 @@
+﻿@model List<PortalInforObrasPublicas.Models.Reporte>
+
+<h2>Denuncias</h2>
+
+<table class="table table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Obra</th>
+            <th>Descripción</th>
+            <th>Fecha</th>
+            <th>Usuario</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Obra?.Nombre</td>
+                <td>@r.Descripcion</td>
+                <td>@r.Fecha</td>
+                <td>@r.Usuario?.Email</td>
+            </tr>
+        }
+    </tbody>
+</table>

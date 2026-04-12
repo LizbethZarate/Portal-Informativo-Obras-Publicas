@@ -2,7 +2,75 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<link rel="stylesheet" href="~/css/obra.css" />
+
+<div class="hero">
+    <div class="container">
+        <h1 class="fw-bold">Sistema de Gestión de Obras Públicas</h1>
+        <p>Consulta el estado de proyectos y reporta problemas.</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6>Total de Obras</h6>
+                    @*  <h3>8</h3> *@
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6>En Ejecución</h6>
+                    @* <h3>5</h3> *@
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h6>Inversión Total</h6>
+                    @* <h3>S/ 29.85M</h3> *@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="search-box d-flex gap-2">
+        <input type="text" class="form-control" placeholder="Buscar por nombre o ubicación..." />
+        <select class="form-select w-auto">
+            <option>Todos</option>
+            <option>En ejecución</option>
+            <option>Finalizado</option>
+        </select>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h4 class="fw-bold">Obras Públicas del Distrito</h4>
+
+    @* <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card obra-card">
+                <img src="https://picsum.photos/400/200" class="card-img-top" />
+
+                <div class="card-body">
+                    <span class="badge bg-primary">En ejecución</span>
+
+                    <h5 class="mt-2">Mejoramiento de Av. Víctor Larco</h5>
+                    <p class="text-muted">Av. Víctor Larco</p>
+
+                    <div class="d-flex justify-content-between">
+                        <small>Avance</small>
+                        <small>45%</small>
+                    </div>
+
+                    <div class="progress mb-2">
+                        <div class="progress-bar" style="width:45%"></div>
+                    </div>
+
+                    <p><strong>Presupuesto:</strong> S/ 8.50M</p>
+
+                    <a href="#" class="btn btn-dark w-100">Ver Detalles</a>
+                </div>
+            </div>
+        </div>
+    </div> *@
 </div>
