@@ -12,8 +12,8 @@ using PortalInforObrasPublicas.Data;
 namespace PortalInforObrasPublicas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260411070703_Inicial")]
-    partial class Inicial
+    [Migration("20260412075644_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
