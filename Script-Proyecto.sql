@@ -2,7 +2,7 @@ CREATE DATABASE PortalInfoObrasPublicas;
 
 USE PortalInfoObrasPublicas;
 
-CREATE TABLE Usuario (
+CREATE TABLE Usuarios (
     IdUsuario INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
     Email NVARCHAR(100) UNIQUE NOT NULL,

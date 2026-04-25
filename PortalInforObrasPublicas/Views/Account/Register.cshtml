@@ -26,11 +26,10 @@
                     <label class="form-label">Correo Electrónico</label>
                     <input asp-for="Email" class="form-control" placeholder="ejemplo@email.com" required />
                 </div>
-                <select class="form-select" aria-label="Default select example">
-                    <option selected>Selecciona tu rol</option>
-                    <option value="1">Ciudadano</option>
-                    <option value="2">Administrador</option>
-                </select>
+                @*<select class="form-select" asp-for="Rol">
+                    <option value="Ciudadano">Ciudadano</option>
+                    <option value="Administrador">Administrador</option>
+                </select>*@
                 <div class="mb-3">
                     <label class="form-label">Contraseña</label>
                     <input asp-for="PasswordHash" type="password" class="form-control" placeholder="Mínimo 6 caracteres" required />

@@ -27,7 +27,17 @@ namespace PortalInforObrasPublicas.Controllers
                 var usuario = _usuarioService.ValidarUsuario(model.Email, model.PasswordHash);
                 if (usuario != null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    //Guardar sesion
+                    HttpContext.Session.SetString("Usuario", usuario.Email);
+                    HttpContext.Session.SetString("Rol", usuario.Rol);
+                    if (usuario.Rol == "Administrador")
+                    {
+                        return RedirectToAction("Index", "Obra");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 ModelState.AddModelError("", "Correo o contraseña incorrectos.");
             }
@@ -60,6 +70,11 @@ namespace PortalInforObrasPublicas.Controllers
                 return RedirectToAction("Login");
             }
             return View(model);
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }
