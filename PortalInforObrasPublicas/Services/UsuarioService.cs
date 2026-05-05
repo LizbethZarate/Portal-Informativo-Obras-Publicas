@@ -20,6 +20,7 @@ namespace PortalInforObrasPublicas.Services
             var usuario = _repo.ObtenerPorEmail(email);
 
             if (usuario is null || usuario.PasswordHash != password)
+                
                 return null;
 
             return usuario;

@@ -22,13 +22,14 @@ namespace PortalInforObrasPublicas.Controllers
         [HttpPost]
         public IActionResult Login(Usuario model)
         {
+            
             if (ModelState.IsValid)
             {
                 var usuario = _usuarioService.ValidarUsuario(model.Email, model.PasswordHash);
                 if (usuario != null)
                 {
                     //Guardar sesion
-                    HttpContext.Session.SetString("Usuario", usuario.Email);
+                    HttpContext.Session.SetString("Usuario", usuario.Nombre);
                     HttpContext.Session.SetString("Rol", usuario.Rol);
                     if (usuario.Rol == "Administrador")
                     {
