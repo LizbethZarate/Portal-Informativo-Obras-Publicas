@@ -31,7 +31,13 @@ namespace PortalInforObrasPublicas.Services
                 throw new InvalidOperationException("El correo ya está registrado.");
 
             if (string.IsNullOrWhiteSpace(usuario.Rol))
+            {
                 usuario.Rol = "Ciudadano";
+            }
+            else
+            {
+                usuario.Rol = usuario.Rol.Trim();
+            }
 
             _repo.Agregar(usuario);
         }
