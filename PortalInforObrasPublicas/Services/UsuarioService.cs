@@ -35,10 +35,7 @@ namespace PortalInforObrasPublicas.Services
             if (_repo.ExisteEmail(usuario.Email))
                 throw new InvalidOperationException("El correo ya está registrado.");
 
-            if (string.IsNullOrWhiteSpace(usuario.Rol))
-                usuario.Rol = "Ciudadano";
-            else
-                usuario.Rol = usuario.Rol.Trim();
+            usuario.Rol = "Ciudadano";
 
             // Hash del password antes de guardar
             usuario.PasswordHash = _hasher.HashPassword(usuario, usuario.PasswordHash);
