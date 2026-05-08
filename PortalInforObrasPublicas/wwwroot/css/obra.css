@@ -1,7 +1,20 @@
 ﻿.hero {
     background: linear-gradient(135deg, #1d4ed8, #2563eb);
     color: white;
-    padding: 60px 20px;
+    padding: 80px 0 60px 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
 }
 
 .stats-card {
@@ -9,14 +22,19 @@
     border-radius: 15px;
     padding: 20px;
     color: white;
-}
+    }
 
 .search-box {
     background: white;
     border-radius: 12px;
     padding: 15px;
-    margin-top: -30px;
+    margin-top: 40px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 3;
 }
 
 .obra-card {
