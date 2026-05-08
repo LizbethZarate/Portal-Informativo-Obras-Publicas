@@ -1,4 +1,5 @@
-﻿using PortalInforObrasPublicas.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using PortalInforObrasPublicas.Interfaces;
 using PortalInforObrasPublicas.Models;
 
 namespace PortalInforObrasPublicas.Services
@@ -6,6 +7,7 @@ namespace PortalInforObrasPublicas.Services
     public class UsuarioService
     {
         private readonly IUsuarioRepository _repo;
+        private readonly PasswordHasher<Usuario> _hasher = new();
 
         public UsuarioService(IUsuarioRepository repo)
         {
@@ -18,8 +20,11 @@ namespace PortalInforObrasPublicas.Services
                 return null;
 
             var usuario = _repo.ObtenerPorEmail(email);
+            if (usuario is null)
+                return null;
 
-            if (usuario is null || usuario.PasswordHash != password)
+            var result = _hasher.VerifyHashedPassword(usuario, usuario.PasswordHash, password);
+            if (result == PasswordVerificationResult.Failed)
                 return null;
 
             return usuario;
@@ -31,13 +36,12 @@ namespace PortalInforObrasPublicas.Services
                 throw new InvalidOperationException("El correo ya está registrado.");
 
             if (string.IsNullOrWhiteSpace(usuario.Rol))
-            {
                 usuario.Rol = "Ciudadano";
-            }
             else
-            {
                 usuario.Rol = usuario.Rol.Trim();
-            }
+
+            // Hash del password antes de guardar
+            usuario.PasswordHash = _hasher.HashPassword(usuario, usuario.PasswordHash);
 
             _repo.Agregar(usuario);
         }
