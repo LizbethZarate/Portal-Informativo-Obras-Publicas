@@ -69,6 +69,7 @@ namespace PortalInforObrasPublicas.Controllers
         // GET: UsuarioController/Delete/5
         public ActionResult Delete(int id)
         {
+<<<<<<< HEAD
             return View();
         }
 
@@ -85,6 +86,24 @@ namespace PortalInforObrasPublicas.Controllers
             {
                 return View();
             }
+=======
+            var usuario = _context.Usuarios.Find(id);
+            if (usuario == null) return NotFound();
+            return View(usuario);
+        }
+
+        // POST: UsuarioController/Delete/5
+        [HttpPost, ActionName("Delete")]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            var usuario = _context.Usuarios.Find(id);
+            if (usuario != null)
+            {
+                _context.Usuarios.Remove(usuario);
+                _context.SaveChanges();
+            }
+            return RedirectToAction(nameof(Index));
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
         }
     }
 }

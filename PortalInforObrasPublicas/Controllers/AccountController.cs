@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using PortalInforObrasPublicas.Models;
 using PortalInforObrasPublicas.Services;
+using System.Security.Claims;
 
 namespace PortalInforObrasPublicas.Controllers
 {
@@ -20,17 +23,45 @@ namespace PortalInforObrasPublicas.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(Usuario model)
+        public async Task<IActionResult> Login(Usuario model)
         {
             
             if (ModelState.IsValid)
             {
-                var usuario = _usuarioService.ValidarUsuario(model.Email, model.PasswordHash);
+                var usuario = _usuarioService.ValidarUsuario(
+                    model.Email,
+                    model.PasswordHash);
+
                 if (usuario != null)
                 {
+<<<<<<< HEAD
                     //Guardar sesion
                     HttpContext.Session.SetString("Usuario", usuario.Nombre);
                     HttpContext.Session.SetString("Rol", usuario.Rol);
+=======
+                    HttpContext.Session.SetString("Usuario", usuario.Email);
+                    HttpContext.Session.SetString("Nombre", usuario.Nombre);
+                    HttpContext.Session.SetString("Rol", usuario.Rol);
+
+                    var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, usuario.Email),
+                new Claim(ClaimTypes.Role, usuario.Rol)
+            };
+
+                    var identity = new ClaimsIdentity(
+                        claims,
+                        CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var principal = new ClaimsPrincipal(identity);
+
+                    // LOGIN CON COOKIE
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        principal);
+
+                    // REDIRECCIÓN
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
                     if (usuario.Rol == "Administrador")
                     {
                         return RedirectToAction("Index", "Obra");
@@ -40,8 +71,10 @@ namespace PortalInforObrasPublicas.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
+
                 ModelState.AddModelError("", "Correo o contraseña incorrectos.");
             }
+
             return View(model);
         }
 
@@ -72,9 +105,19 @@ namespace PortalInforObrasPublicas.Controllers
             }
             return View(model);
         }
+<<<<<<< HEAD
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
+=======
+        public async Task<IActionResult> Logout()
+        {
+            HttpContext.Session.Clear();
+
+            await HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
             return RedirectToAction("Login");
         }
     }

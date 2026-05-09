@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.sitop-title {
+    color: #0a2342;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.sitop-desc {
+    color: #222c3c;
+    font-size: 1rem;
+    line-height: 1;
+}

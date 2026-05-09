@@ -1,12 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+<<<<<<< HEAD
 using PortalInforObrasPublicas.Data;
 using PortalInforObrasPublicas.Models;
+=======
+using PortalInforObrasPublicas.Models;
+using PortalInforObrasPublicas.Services;
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
 
 namespace PortalInforObrasPublicas.Controllers
 {
     public class ObraController : Controller
     {
+<<<<<<< HEAD
         private readonly AppDbContext _context;
 
         public ObraController(AppDbContext context)
@@ -16,25 +22,31 @@ namespace PortalInforObrasPublicas.Controllers
 
         // GET: ObraController
         public ActionResult Index()
+=======
+        private readonly ObraService _service;
+
+        public ObraController(ObraService service)
+        {
+            _service = service;
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Index()
+        {
+            var obras = _service.ObtenerTodas();
+            return View(obras);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Create()
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
         {
             var obras = _context.Obras.ToList();
             return View(obras);
         }
 
-        // GET: ObraController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: ObraController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: ObraController/Create
         [HttpPost]
+<<<<<<< HEAD
         [ValidateAntiForgeryToken]
         public ActionResult Create(Obra obra)
         {
@@ -45,24 +57,52 @@ namespace PortalInforObrasPublicas.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(obra);
+=======
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Create(Obra obra)
+        {
+            var mensaje = _service.CrearObra(obra);
+
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ModelState.AddModelError("", mensaje);
+                return View(obra);
+            }
+
+            return RedirectToAction(nameof(Index));
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
         }
 
-        // GET: ObraController/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Obra/Edit/5
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Edit(int id)
         {
+<<<<<<< HEAD
             var obra = _context.Obras.Find(id);
             if (obra == null) return NotFound();
+=======
+            var obra = _service.ObtenerPorId(id);
+            if (obra == null)
+                return NotFound();
+
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
             return View(obra);
         }
 
-        // POST: ObraController/Edit/5
+        // POST: Obra/Edit/5
         [HttpPost]
+<<<<<<< HEAD
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Obra obra)
+=======
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Edit(Obra obra)
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
         {
             if (!ModelState.IsValid)
                 return View(obra);
 
+<<<<<<< HEAD
             var obraDb = _context.Obras.Find(obra.IdObra);
             if (obraDb == null) return NotFound();
 
@@ -74,13 +114,23 @@ namespace PortalInforObrasPublicas.Controllers
             obraDb.FechaFin = obra.FechaFin;
 
             _context.SaveChanges();
+=======
+            var mensaje = _service.Actualizar(obra);
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ModelState.AddModelError("", mensaje);
+                return View(obra);
+            }
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
 
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: ObraController/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Obra/Delete/5
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Delete(int id)
         {
+<<<<<<< HEAD
             var obra = _context.Obras.Find(id);
             if (obra == null) return NotFound();
             return View(obra);
@@ -96,6 +146,21 @@ namespace PortalInforObrasPublicas.Controllers
                 _context.Obras.Remove(obra);
                 _context.SaveChanges();
             }
+=======
+            var obra = _service.ObtenerPorId(id);
+            if (obra == null)
+                return NotFound();
+
+            return View(obra);
+        }
+
+        // POST: Obra/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Administrador")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            _service.Eliminar(id);
+>>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
             return RedirectToAction(nameof(Index));
         }
     }
