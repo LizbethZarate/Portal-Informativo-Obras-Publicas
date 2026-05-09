@@ -23,13 +23,8 @@ namespace PortalInforObrasPublicas.Services
             if (usuario is null)
                 return null;
 
-<<<<<<< HEAD
-            if (usuario is null || usuario.PasswordHash != password)
-                
-=======
             var result = _hasher.VerifyHashedPassword(usuario, usuario.PasswordHash, password);
             if (result == PasswordVerificationResult.Failed)
->>>>>>> 7b1daec6bb3082888fd86b4fca5b639a6b80a4d6
                 return null;
 
             return usuario;
