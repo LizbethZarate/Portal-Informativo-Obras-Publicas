@@ -12,7 +12,7 @@ using PortalInforObrasPublicas.Data;
 namespace PortalInforObrasPublicas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260503054210_initial")]
+    [Migration("20260509064327_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -32,6 +32,10 @@ namespace PortalInforObrasPublicas.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdObra"));
+
+                    b.Property<string>("CodigoSNIP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
@@ -104,10 +108,6 @@ namespace PortalInforObrasPublicas.Migrations
 
                     b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
-
-                    b.Property<string>("RutaEvidencia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdReporte");
 

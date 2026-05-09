@@ -12,6 +12,9 @@ namespace PortalInforObrasPublicas.Models
         [StringLength(150)]
         public string Nombre { get; set; } = string.Empty;
 
+        [Required]
+        public string CodigoSNIP { get; set; } = string.Empty;
+
         public string? Ubicacion { get; set; } = string.Empty;
 
         public string? Estado { get; set; }

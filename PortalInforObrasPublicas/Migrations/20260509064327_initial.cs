@@ -18,6 +18,7 @@ namespace PortalInforObrasPublicas.Migrations
                     IdObra = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CodigoSNIP = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ubicacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Presupuesto = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
@@ -75,8 +76,7 @@ namespace PortalInforObrasPublicas.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdUsuario = table.Column<int>(type: "int", nullable: true),
-                    RutaEvidencia = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IdUsuario = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

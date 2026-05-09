@@ -2,14 +2,7 @@
     background: linear-gradient(135deg, #1d4ed8, #2563eb);
     color: white;
     padding: 80px 0 60px 0;
-    width: 100vw;
-    position: relative;
-    left: 50%;
-    right: 50%;
-    margin-left: -50vw;
-    margin-right: -50vw;
-    box-sizing: border-box;
-    overflow: visible;
+    width: 100%;
 }
 
 .hero .container {
