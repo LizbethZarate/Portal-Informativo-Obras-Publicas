@@ -68,8 +68,6 @@ namespace PortalInforObrasPublicas.Controllers
                     imagen.CopyTo(stream);
                 }
 
-                // IMPORTANTE:
-                // AQUÍ SE AGREGA LA RUTA A BD
                 obra.Imagenes = new List<ObraImagen>
                 {
                     new ObraImagen

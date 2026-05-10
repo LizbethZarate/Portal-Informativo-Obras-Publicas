@@ -46,3 +46,8 @@
     height: 8px;
     border-radius: 10px;
 }
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}

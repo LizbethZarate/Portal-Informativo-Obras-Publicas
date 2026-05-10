@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<PortalInforObrasPublicas.Models.Obra>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -12,19 +14,23 @@
             <div class="col-md-4">
                 <div class="stats-card">
                     <h6>Total de Obras</h6>
-                    @*  <h3>8</h3> *@
+                    <h3>@Model.Count</h3>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stats-card">
                     <h6>En Ejecución</h6>
-                    @* <h3>5</h3> *@
+                    <h3>
+                        @Model.Count(o => o.Estado == "En ejecución")
+                    </h3>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stats-card">
                     <h6>Inversión Total</h6>
-                    @* <h3>S/ 29.85M</h3> *@
+                    <h3>
+                        S/ @Model.Sum(o => o.Presupuesto).ToString("N2")
+                    </h3>
                 </div>
             </div>
         </div>
@@ -42,31 +48,69 @@
 <div class="container mt-5">
     <h4 class="fw-bold">Obras Públicas del Distrito</h4>
 
-    @* <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card obra-card">
-                <img src="https://picsum.photos/400/200" class="card-img-top" />
+    <div class="row mt-4">
 
-                <div class="card-body">
-                    <span class="badge bg-primary">En ejecución</span>
+        @foreach (var obra in Model)
+        {
+            <div class="col-md-4 mb-4">
 
-                    <h5 class="mt-2">Mejoramiento de Av. Víctor Larco</h5>
-                    <p class="text-muted">Av. Víctor Larco</p>
+                <div class="card obra-card h-100">
 
-                    <div class="d-flex justify-content-between">
-                        <small>Avance</small>
-                        <small>45%</small>
+                    @if (obra.Imagenes != null &&
+                                    obra.Imagenes.Any())
+                    {
+                        <img src="@obra.Imagenes.First().RutaImagen"
+                             class="card-img-top"
+                             style="height:220px; object-fit:cover;" />
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/400x200"
+                             class="card-img-top" />
+                    }
+
+                    <div class="card-body">
+
+                        <span class="badge bg-primary">
+                            @obra.Estado
+                        </span>
+
+                        <h5 class="mt-3">
+                            @obra.Nombre
+                        </h5>
+
+                        <p class="text-muted">
+                            @obra.Ubicacion
+                        </p>
+
+                        <p>
+                            <strong>Presupuesto:</strong>
+                            S/ @obra.Presupuesto
+                        </p>
+
+                        <p>
+                            <strong>Inicio:</strong>
+                            @obra.FechaInicio.ToString("dd/MM/yyyy")
+                        </p>
+
+                        @if (obra.FechaFin != null)
+                        {
+                            <p>
+                                <strong>Fin:</strong>
+                                @obra.FechaFin?.ToString("dd/MM/yyyy")
+                            </p>
+                        }
+
+                        <a href="#"
+                           class="btn btn-dark w-100">
+                            Ver Detalles
+                        </a>
+
                     </div>
-
-                    <div class="progress mb-2">
-                        <div class="progress-bar" style="width:45%"></div>
-                    </div>
-
-                    <p><strong>Presupuesto:</strong> S/ 8.50M</p>
-
-                    <a href="#" class="btn btn-dark w-100">Ver Detalles</a>
                 </div>
+
             </div>
-        </div>
-    </div> *@
+        }
+
+    </div>
 </div>
