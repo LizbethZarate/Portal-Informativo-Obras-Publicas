@@ -17,9 +17,26 @@ namespace PortalInforObrasPublicas.Controllers
             _obraService = obraService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string buscar, string estado)
         {
             var obras = _obraService.ObtenerTodas();
+
+            if (!string.IsNullOrWhiteSpace(buscar))
+            {
+                obras = obras.Where(o =>
+                    o.Nombre.Contains(buscar, StringComparison.OrdinalIgnoreCase) ||
+                    (o.Ubicacion != null && o.Ubicacion.Contains(buscar, StringComparison.OrdinalIgnoreCase))
+                ).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado) && estado != "Todos")
+            {
+                obras = obras.Where(o => o.Estado == estado).ToList();
+            }
+
+            ViewBag.Buscar = buscar;
+            ViewBag.Estado = estado;
+
             return View(obras);
         }
 
@@ -43,6 +60,16 @@ namespace PortalInforObrasPublicas.Controllers
         public IActionResult HistorialDenuncias()
         {
             return View();
+        }
+
+        public IActionResult Detalle(int id)
+        {
+            var obra = _obraService.ObtenerPorId(id);
+
+            if (obra == null)
+                return NotFound();
+
+            return View(obra);
         }
     }
 }

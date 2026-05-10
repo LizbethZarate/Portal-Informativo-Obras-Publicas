@@ -1,0 +1,184 @@
+﻿@model PortalInforObrasPublicas.Models.Obra
+
+@{
+    ViewData["Title"] = "Detalle de Obra";
+
+    var badgeClass = Model.Estado == "En ejecución" ? "estado-ejecucion" :
+                     Model.Estado == "Finalizada" ? "estado-finalizada" :
+                     "estado-pendiente";
+
+    var avanceClass = Model.Estado == "En ejecución" ? "avance-ejecucion" :
+                      Model.Estado == "Finalizada" ? "avance-finalizada" :
+                      "avance-pendiente";
+
+    var imagen = Model.Imagenes != null && Model.Imagenes.Any()
+        ? Model.Imagenes.First().RutaImagen
+        : "https://via.placeholder.com/1200x400";
+}
+
+<link rel="stylesheet" href="~/css/obra.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/obra-detalle.css" asp-append-version="true" />
+
+<div class="detalle-header">
+    <div class="container">
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="detalle-volver">
+            <i class="bi bi-arrow-left"></i>
+            Volver al listado
+        </a>
+    </div>
+</div>
+
+<div class="detalle-img"
+     style="background-image:url('@imagen')">
+</div>
+
+<div class="detalle-page">
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-lg-8">
+
+                <div class="detalle-card">
+                    <span class="estado-badge @badgeClass">
+                        @Model.Estado
+                    </span>
+
+                    <h1 class="detalle-title">
+                        @Model.Nombre
+                    </h1>
+
+                    <p class="detalle-location">
+                        <i class="bi bi-geo-alt"></i>
+                        @Model.Ubicacion
+                    </p>
+
+                    <hr />
+
+                    <h5 class="fw-bold">
+                        Descripción del Proyecto
+                    </h5>
+
+                    <p class="detalle-text">
+                        Proyecto registrado en el sistema de información y transparencia de obras públicas.
+                    </p>
+                </div>
+
+                <div class="detalle-card mt-4">
+                    <h5 class="fw-bold mb-4">
+                        Avance de Obra
+                    </h5>
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="text-muted">
+                            Progreso actual
+                        </span>
+
+                        <strong class="detalle-avance-numero">
+                            @Model.Avance%
+                        </strong>
+                    </div>
+
+                    <div class="avance-barra">
+                        <div class="avance-progreso @avanceClass"
+                             style="width:@Model.Avance%">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detalle-reporte mt-4">
+                    <h5 class="fw-bold">
+                        ¿Detectaste algún problema?
+                    </h5>
+
+                    <p>
+                        Si observas alguna irregularidad, obra inconclusa o falta de mantenimiento, puedes reportarlo de manera directa.
+                    </p>
+
+                    <a asp-controller="Home"
+                       asp-action="Privacy"
+                       class="btn btn-dark w-100">
+                        Reportar Problema
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="col-lg-4">
+
+                <div class="detalle-card">
+                    <h5 class="fw-bold mb-4">
+                        Información Técnica
+                    </h5>
+
+                    <div class="info-item">
+                        <span>
+                            <i class="bi bi-currency-dollar"></i>
+                            Presupuesto Total
+                        </span>
+                        <strong class="text-success fs-4">
+                            S/ @Model.Presupuesto.ToString("N2")
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>
+                            <i class="bi bi-calendar"></i>
+                            Fecha de Inicio
+                        </span>
+                        <strong>
+                            @Model.FechaInicio.ToString("dd/MM/yyyy")
+                        </strong>
+                    </div>
+
+                    <div class="info-item">
+                        <span>
+                            <i class="bi bi-calendar-check"></i>
+                            Fecha de Finalización
+                        </span>
+                        <strong>
+                            @(Model.FechaFin?.ToString("dd/MM/yyyy") ?? "No definida")
+                        </strong>
+                    </div>
+
+                    <div class="info-item border-0">
+                        <span>
+                            Duración Estimada
+                        </span>
+                        <strong>
+                            @{
+                                if (Model.FechaFin != null)
+                                {
+                                    var meses = ((Model.FechaFin.Value.Year - Model.FechaInicio.Year) * 12)
+                                    + Model.FechaFin.Value.Month
+                                    - Model.FechaInicio.Month;
+
+                                    @($"{meses} meses")
+                                }
+                                else
+                                {
+                                    @("No definida")
+                                }
+                            }
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="detalle-card mt-4">
+                    <h6 class="fw-bold">
+                        Fuente de Información
+                    </h6>
+
+                    <p class="detalle-text mb-0">
+                        Los datos mostrados se integran con la información registrada en el sistema.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

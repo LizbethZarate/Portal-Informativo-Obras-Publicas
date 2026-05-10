@@ -34,14 +34,42 @@
                 </div>
             </div>
         </div>
-        <div class="search-box d-flex gap-2 mt-4">
-            <input type="text" class="form-control" placeholder="Buscar por nombre o ubicación..." />
-            <select class="form-select w-auto">
-                <option>Todos</option>
-                <option>En ejecución</option>
-                <option>Finalizado</option>
+        <form asp-controller="Home"
+              asp-action="Index"
+              method="get"
+              class="search-box d-flex gap-2 mt-4">
+
+            <input type="text"
+                   name="buscar"
+                   value="@ViewBag.Buscar"
+                   class="form-control"
+                   placeholder="Buscar por nombre o ubicación..." />
+
+            <select name="estado"
+                    class="form-select w-auto"
+                    onchange="this.form.submit()">
+
+                <option value="Todos" selected="@(ViewBag.Estado == "Todos")">
+                    Todos
+                </option>
+
+                <option value="Pendiente" selected="@(ViewBag.Estado == "Pendiente")">
+                    Pendiente
+                </option>
+
+                <option value="En ejecución" selected="@(ViewBag.Estado == "En ejecución")">
+                    En ejecución
+                </option>
+
+                <option value="Finalizada" selected="@(ViewBag.Estado == "Finalizada")">
+                    Finalizada
+                </option>
             </select>
-        </div>
+
+            <button type="submit" class="btn btn-dark">
+                Buscar
+            </button>
+        </form>
     </div>
 </div>
 
@@ -109,7 +137,9 @@
 
                         <hr />
 
-                        <a href="#"
+                        <a asp-controller="Home"
+                           asp-action="Detalle"
+                           asp-route-id="@obra.IdObra"
                            class="btn btn-dark w-100">
                             Ver Detalles
                         </a>
