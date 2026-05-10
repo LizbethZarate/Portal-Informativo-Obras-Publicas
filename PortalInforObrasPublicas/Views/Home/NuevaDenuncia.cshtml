@@ -1,0 +1,145 @@
+﻿@model PortalInforObrasPublicas.Models.Reporte
+
+@{
+    ViewData["Title"] = "Nueva Denuncia";
+    var obras = ViewBag.Obras as List<PortalInforObrasPublicas.Models.Obra>;
+}
+
+<link rel="stylesheet" href="~/css/denuncia.css" asp-append-version="true" />
+
+<div class="denuncia-page">
+
+    <div class="denuncia-container">
+
+        <h1 class="denuncia-title">
+            Registrar Nueva Denuncia
+        </h1>
+
+        <p class="denuncia-subtitle">
+            Reporta problemas o irregularidades en las obras públicas del distrito
+        </p>
+
+        <div class="denuncia-card">
+
+            <form asp-controller="Home"
+                  asp-action="NuevaDenuncia"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="All"
+                     class="text-danger mb-3"></div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">
+                        Selecciona la obra *
+                    </label>
+
+                    <select asp-for="IdObra"
+                            class="form-select denuncia-input"
+                            required>
+
+                        <option value="">
+                            Elige una obra pública
+                        </option>
+
+                        @foreach (var obra in obras)
+                        {
+                            <option value="@obra.IdObra"
+                                    selected="@(Model.IdObra == obra.IdObra)">
+                                @obra.Nombre
+                            </option>
+                        }
+
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">
+                        Descripción del problema *
+                    </label>
+
+                    <textarea asp-for="Descripcion"
+                              class="form-control denuncia-input"
+                              rows="4"
+                              minlength="20"
+                              required
+                              placeholder="Describe detalladamente el problema que observaste..."></textarea>
+
+                    <small class="text-muted">
+                        Mínimo 20 caracteres. Sé específico sobre el problema detectado.
+                    </small>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-bold">
+                        Evidencia fotográfica *
+                    </label>
+
+                    <label class="upload-box" for="imagenes">
+                        <i class="bi bi-upload upload-icon"></i>
+
+                        <span class="upload-title">
+                            Arrastra imágenes aquí o haz clic para seleccionar
+                        </span>
+
+                        <span class="upload-subtitle">
+                            Formatos: JPG, PNG (máx. 5MB por imagen)
+                        </span>
+
+                        <span class="upload-button">
+                            Seleccionar Imágenes
+                        </span>
+                    </label>
+
+                    <input type="file"
+                           id="imagenes"
+                           name="imagenes"
+                           class="d-none"
+                           accept=".jpg,.jpeg,.png"
+                           multiple
+                           required />
+                </div>
+
+                <div class="info-box mb-4">
+                    <div class="d-flex gap-3">
+                        <i class="bi bi-info-circle"></i>
+
+                        <div>
+                            <strong>Información importante:</strong>
+
+                            <ul class="mb-0 mt-2">
+                                <li>Tu denuncia será revisada por el equipo municipal</li>
+                                <li>Recibirás actualizaciones sobre el estado de tu reporte</li>
+                                <li>Las denuncias falsas pueden tener consecuencias legales</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <button type="submit"
+                                class="btn btn-dark w-100 denuncia-btn">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Enviar Denuncia
+                        </button>
+                    </div>
+
+                    <div class="col-md-6">
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary w-100 denuncia-btn">
+                            Cancelar
+                        </a>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

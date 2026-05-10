@@ -1,0 +1,104 @@
+﻿.denuncia-page {
+    background: #f8fafc;
+    min-height: calc(100vh - 90px);
+    padding: 36px 15px 80px;
+}
+
+.denuncia-container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.denuncia-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #020617;
+    margin-bottom: 8px;
+}
+
+.denuncia-subtitle {
+    color: #475569;
+    margin-bottom: 24px;
+}
+
+.denuncia-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+}
+
+.denuncia-input {
+    border: none;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+    .denuncia-input:focus {
+        background: #fff;
+        border: 1px solid #2563eb;
+        box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.15);
+    }
+
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 210px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 14px;
+    cursor: pointer;
+    background: #fff;
+    text-align: center;
+    padding: 24px;
+    transition: all 0.2s ease;
+}
+
+    .upload-box:hover {
+        background: #f8fafc;
+        border-color: #2563eb;
+    }
+
+.upload-icon {
+    font-size: 2.8rem;
+    color: #94a3b8;
+}
+
+.upload-title {
+    color: #334155;
+    font-weight: 500;
+}
+
+.upload-subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.upload-button {
+    margin-top: 8px;
+    border: 1px solid #e5e7eb;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    color: #020617;
+    background: #fff;
+}
+
+.info-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 18px;
+    color: #1d4ed8;
+    font-size: 0.95rem;
+}
+
+.denuncia-btn {
+    padding: 11px;
+    border-radius: 10px;
+    font-weight: 700;
+}

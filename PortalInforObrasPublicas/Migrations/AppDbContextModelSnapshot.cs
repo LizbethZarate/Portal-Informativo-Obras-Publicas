@@ -118,6 +118,28 @@ namespace PortalInforObrasPublicas.Migrations
                     b.ToTable("Reportes");
                 });
 
+            modelBuilder.Entity("PortalInforObrasPublicas.Models.ReporteImagen", b =>
+                {
+                    b.Property<int>("IdReporteImagen")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdReporteImagen"));
+
+                    b.Property<int>("IdReporte")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RutaImagen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdReporteImagen");
+
+                    b.HasIndex("IdReporte");
+
+                    b.ToTable("ReporteImagenes");
+                });
+
             modelBuilder.Entity("PortalInforObrasPublicas.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
@@ -175,11 +197,27 @@ namespace PortalInforObrasPublicas.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("PortalInforObrasPublicas.Models.ReporteImagen", b =>
+                {
+                    b.HasOne("PortalInforObrasPublicas.Models.Reporte", "Reporte")
+                        .WithMany("Imagenes")
+                        .HasForeignKey("IdReporte")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reporte");
+                });
+
             modelBuilder.Entity("PortalInforObrasPublicas.Models.Obra", b =>
                 {
                     b.Navigation("Imagenes");
 
                     b.Navigation("Reportes");
+                });
+
+            modelBuilder.Entity("PortalInforObrasPublicas.Models.Reporte", b =>
+                {
+                    b.Navigation("Imagenes");
                 });
 #pragma warning restore 612, 618
         }

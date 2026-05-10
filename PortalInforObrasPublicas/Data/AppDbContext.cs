@@ -12,5 +12,6 @@ namespace PortalInforObrasPublicas.Data
         public DbSet<Obra> Obras { get; set; }
         public DbSet<Reporte> Reportes { get; set; }
         public DbSet<ObraImagen> ObraImagenes { get; set; }
+        public DbSet<ReporteImagen> ReporteImagenes { get; set; }
     }
 }

@@ -1,16 +1,26 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PortalInforObrasPublicas.Services;
 
 namespace PortalInforObrasPublicas.Controllers
 {
     [Authorize(Roles = "Administrador")]
     public class ReporteController : Controller
     {
+
+        private readonly ReporteService _service;
+
+        public ReporteController(ReporteService service)
+        {
+            _service = service;
+        }
+
         // GET: ReporteController
         public ActionResult Index()
         {
-            return View();
+            var reportes = _service.ObtenerTodos();
+            return View(reportes);
         }
 
         // GET: ReporteController/Details/5

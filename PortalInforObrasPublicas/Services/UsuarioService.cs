@@ -58,5 +58,10 @@ namespace PortalInforObrasPublicas.Services
 
             _repo.Agregar(usuario);
         }
+        public int? ObtenerIdPorEmail(string email)
+        {
+            var usuario = _repo.ObtenerPorEmail(email);
+            return usuario?.IdUsuario;
+        }
     }
 }

@@ -14,11 +14,20 @@ namespace PortalInforObrasPublicas.Services
 
         public string CrearReporte(Reporte reporte)
         {
+            if (reporte.IdObra <= 0)
+                return "Debes seleccionar una obra.";
+
             if (string.IsNullOrWhiteSpace(reporte.Descripcion))
-                return "El reporte no puede estar vacío.";
+                return "La descripción no puede estar vacía.";
+
+            if (reporte.Descripcion.Trim().Length < 20)
+                return "La descripción debe tener mínimo 20 caracteres.";
 
             if (!_repo.ExisteObra(reporte.IdObra))
                 return "La obra no existe.";
+
+            reporte.Estado = "Pendiente";
+            reporte.Fecha = DateTime.Now;
 
             _repo.Crear(reporte);
 
@@ -28,6 +37,10 @@ namespace PortalInforObrasPublicas.Services
         public List<Reporte> ObtenerTodos()
         {
             return _repo.ObtenerTodos();
+        }
+        public List<Reporte> ObtenerPorUsuario(int idUsuario)
+        {
+            return _repo.ObtenerPorUsuario(idUsuario);
         }
     }
 }

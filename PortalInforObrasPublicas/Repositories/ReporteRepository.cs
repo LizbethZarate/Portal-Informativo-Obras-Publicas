@@ -1,4 +1,5 @@
-﻿using PortalInforObrasPublicas.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PortalInforObrasPublicas.Data;
 using PortalInforObrasPublicas.Interfaces;
 using PortalInforObrasPublicas.Models;
 
@@ -15,7 +16,11 @@ namespace PortalInforObrasPublicas.Repositories
 
         public List<Reporte> ObtenerTodos()
         {
-            return _context.Reportes.ToList();
+            return _context.Reportes
+                .Include(r => r.Obra)
+                .Include(r => r.Usuario)
+                .Include(r => r.Imagenes)
+                .ToList();
         }
 
         public void Crear(Reporte reporte)
@@ -27,6 +32,16 @@ namespace PortalInforObrasPublicas.Repositories
         public bool ExisteObra(int idObra)
         {
             return _context.Obras.Any(o => o.IdObra == idObra);
+        }
+
+        public List<Reporte> ObtenerPorUsuario(int idUsuario)
+        {
+            return _context.Reportes
+                .Include(r => r.Obra)
+                .Include(r => r.Imagenes)
+                .Where(r => r.IdUsuario == idUsuario)
+                .OrderByDescending(r => r.Fecha)
+                .ToList();
         }
     }
 }

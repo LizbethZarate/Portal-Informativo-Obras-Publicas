@@ -95,10 +95,35 @@ namespace PortalInforObrasPublicas.Migrations
                         principalColumn: "IdUsuario");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ReporteImagenes",
+                columns: table => new
+                {
+                    IdReporteImagen = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdReporte = table.Column<int>(type: "int", nullable: false),
+                    RutaImagen = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReporteImagenes", x => x.IdReporteImagen);
+                    table.ForeignKey(
+                        name: "FK_ReporteImagenes_Reportes_IdReporte",
+                        column: x => x.IdReporte,
+                        principalTable: "Reportes",
+                        principalColumn: "IdReporte",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ObraImagenes_IdObra",
                 table: "ObraImagenes",
                 column: "IdObra");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReporteImagenes_IdReporte",
+                table: "ReporteImagenes",
+                column: "IdReporte");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reportes_IdObra",
@@ -116,6 +141,9 @@ namespace PortalInforObrasPublicas.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ObraImagenes");
+
+            migrationBuilder.DropTable(
+                name: "ReporteImagenes");
 
             migrationBuilder.DropTable(
                 name: "Reportes");

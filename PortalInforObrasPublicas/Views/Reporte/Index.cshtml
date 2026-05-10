@@ -1,5 +1,7 @@
 ﻿@model List<PortalInforObrasPublicas.Models.Reporte>
 
+<div class="container mt-4">
+
 <h2>Denuncias</h2>
 
 <table class="table table-striped">
@@ -8,18 +10,36 @@
             <th>Obra</th>
             <th>Descripción</th>
             <th>Fecha</th>
+            <th>Estado</th>
             <th>Usuario</th>
+            <th>Evidencia</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var r in Model)
         {
             <tr>
                 <td>@r.Obra?.Nombre</td>
                 <td>@r.Descripcion</td>
-                <td>@r.Fecha</td>
+                <td>@r.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@r.Estado</td>
                 <td>@r.Usuario?.Email</td>
+                <td>
+                    @if (r.Imagenes != null && r.Imagenes.Any())
+                    {
+                        <img src="@r.Imagenes.First().RutaImagen"
+                             width="90"
+                             height="60"
+                             style="object-fit:cover;border-radius:8px;" />
+                    }
+                    else
+                    {
+                        <span class="text-muted">Sin imagen</span>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
+</div>

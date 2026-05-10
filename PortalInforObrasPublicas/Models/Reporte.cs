@@ -21,10 +21,10 @@ namespace PortalInforObrasPublicas.Models
 
         public string Estado { get; set; } = "Pendiente";
 
-        // Opcional: para luego relacionar con usuario
         public int? IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]
         public Usuario? Usuario { get; set; }
+        public List<ReporteImagen>? Imagenes { get; set; }
     }
 }
