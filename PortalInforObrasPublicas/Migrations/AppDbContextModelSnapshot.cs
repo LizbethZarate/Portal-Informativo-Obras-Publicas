@@ -109,6 +109,13 @@ namespace PortalInforObrasPublicas.Migrations
                     b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
 
+                    b.Property<string>("ObservacionRespuesta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IdReporte");
 
                     b.HasIndex("IdObra");

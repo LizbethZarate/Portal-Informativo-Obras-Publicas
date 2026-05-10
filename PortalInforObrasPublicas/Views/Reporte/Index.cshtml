@@ -1,45 +1,285 @@
 ﻿@model List<PortalInforObrasPublicas.Models.Reporte>
 
-<div class="container mt-4">
+@{
+    ViewData["Title"] = "Panel Administrativo";
 
-<h2>Denuncias</h2>
+    var total = Model.Count;
+    var pendientes = Model.Count(r => r.Estado == "Pendiente");
+    var enProceso = Model.Count(r => r.Estado == "En Proceso");
+    var resueltas = Model.Count(r => r.Estado == "Resuelto");
+}
 
-<table class="table table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Obra</th>
-            <th>Descripción</th>
-            <th>Fecha</th>
-            <th>Estado</th>
-            <th>Usuario</th>
-            <th>Evidencia</th>
-        </tr>
-    </thead>
+<link rel="stylesheet" href="~/css/denuncias-panel.css" asp-append-version="true" />
 
-    <tbody>
+<div class="denuncias-page">
+    <div class="admin-container">
+
+        <div class="admin-title-box">
+            <div class="admin-icon">
+                <i class="bi bi-shield"></i>
+            </div>
+
+            <div>
+                <h1 class="page-title">Panel Administrativo</h1>
+                <p class="page-subtitle">Gestión y seguimiento de denuncias ciudadanas</p>
+            </div>
+        </div>
+
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success">@TempData["Mensaje"]</div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">@TempData["Error"]</div>
+        }
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="stat-box">
+                    <span>Total</span>
+                    <strong>@total</strong>
+                    <i class="bi bi-exclamation-circle"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="stat-box stat-yellow">
+                    <span>Pendientes</span>
+                    <strong>@pendientes</strong>
+                    <i class="bi bi-clock"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="stat-box stat-blue">
+                    <span>En Proceso</span>
+                    <strong>@enProceso</strong>
+                    <i class="bi bi-exclamation-circle"></i>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="stat-box stat-green">
+                    <span>Resueltas</span>
+                    <strong>@resueltas</strong>
+                    <i class="bi bi-check-circle"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-box mb-4">
+            <i class="bi bi-funnel"></i>
+            <select class="form-select denuncia-filter" id="filtroEstado">
+                <option value="Todas">Todas las denuncias</option>
+                <option value="Pendiente">Pendientes</option>
+                <option value="En Proceso">En Proceso</option>
+                <option value="Resuelto">Resueltas</option>
+            </select>
+
+            <span class="text-muted">
+                Mostrando @Model.Count denuncias
+            </span>
+        </div>
+
         @foreach (var r in Model)
         {
-            <tr>
-                <td>@r.Obra?.Nombre</td>
-                <td>@r.Descripcion</td>
-                <td>@r.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
-                <td>@r.Estado</td>
-                <td>@r.Usuario?.Email</td>
-                <td>
-                    @if (r.Imagenes != null && r.Imagenes.Any())
+            var imagen = r.Imagenes != null && r.Imagenes.Any()
+            ? r.Imagenes.First().RutaImagen
+            : "https://via.placeholder.com/300x220";
+
+            var estadoClass = r.Estado == "Resuelto" ? "badge-resuelto" :
+            r.Estado == "En Proceso" ? "badge-proceso" :
+            "badge-pendiente";
+
+            <div class="denuncia-item admin-denuncia-item"
+                 data-estado="@r.Estado">
+
+                <div class="denuncia-img-box">
+                    <img src="@imagen" class="denuncia-img" />
+
+                    @if (r.Imagenes != null && r.Imagenes.Count > 1)
                     {
-                        <img src="@r.Imagenes.First().RutaImagen"
-                             width="90"
-                             height="60"
-                             style="object-fit:cover;border-radius:8px;" />
+                        <small>+ @(r.Imagenes.Count - 1) foto(s) más</small>
                     }
-                    else
+                </div>
+
+                <div class="denuncia-content">
+                    <div class="d-flex justify-content-between gap-3">
+                        <div>
+                            <h5>@r.Obra?.Nombre</h5>
+                            <p class="mb-0">
+                                Reportado por: @r.Usuario?.Nombre
+                            </p>
+                            <p class="denuncia-date">
+                                @r.Fecha.ToString("dd MMM yyyy")
+                            </p>
+                        </div>
+
+                        <div class="d-flex gap-2 align-items-start">
+                            <span class="estado-pill @estadoClass">
+                                @r.Estado
+                            </span>
+
+                            <span class="prioridad-pill">
+                                @r.Prioridad
+                            </span>
+                        </div>
+                    </div>
+
+                    <p>@r.Descripcion</p>
+
+                    @if (!string.IsNullOrWhiteSpace(r.ObservacionRespuesta))
                     {
-                        <span class="text-muted">Sin imagen</span>
+                        <div class="respuesta-box">
+                            <strong>Observaciones:</strong>
+                            <p>@r.ObservacionRespuesta</p>
+                        </div>
                     }
-                </td>
-            </tr>
+
+                    <button type="button"
+                            class="btn btn-dark btn-sm mt-3"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalGestionar-@r.IdReporte">
+                        Gestionar Denuncia
+                    </button>
+                </div>
+            </div>
+
+            <div class="modal fade"
+                 id="modalGestionar-@r.IdReporte"
+                 tabindex="-1"
+                 aria-hidden="true">
+
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content gestion-modal">
+
+                        <form asp-controller="Reporte"
+                              asp-action="Gestionar"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <input type="hidden"
+                                   name="idReporte"
+                                   value="@r.IdReporte" />
+
+                            <div class="modal-header border-0">
+                                <div>
+                                    <h5 class="modal-title fw-bold">
+                                        Gestionar Denuncia
+                                    </h5>
+                                    <p class="text-muted mb-0">
+                                        Actualiza el estado, prioridad y observaciones de la denuncia
+                                    </p>
+                                </div>
+
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal">
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <div class="modal-summary">
+                                    <h6>@r.Obra?.Nombre</h6>
+                                    <p>@r.Descripcion</p>
+                                    <small>
+                                        Reportado por @r.Usuario?.Nombre el @r.Fecha.ToString("dd/MM/yyyy")
+                                    </small>
+                                </div>
+
+                                <h6 class="fw-bold mt-4">Evidencias</h6>
+
+                                <div class="d-flex gap-2 flex-wrap mb-4">
+                                    @if (r.Imagenes != null && r.Imagenes.Any())
+                                    {
+                                        foreach (var img in r.Imagenes)
+                                        {
+                                            <img src="@img.RutaImagen"
+                                                 class="modal-evidence" />
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Sin evidencias</span>
+                                    }
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        Estado de la denuncia
+                                    </label>
+
+                                    <select name="estado" class="form-select denuncia-input">
+                                        <option value="Pendiente" selected="@(r.Estado == "Pendiente")">Pendiente</option>
+                                        <option value="En Proceso" selected="@(r.Estado == "En Proceso")">En Proceso</option>
+                                        <option value="Resuelto" selected="@(r.Estado == "Resuelto")">Resuelto</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        Prioridad
+                                    </label>
+
+                                    <select name="prioridad" class="form-select denuncia-input">
+                                        <option value="Baja" selected="@(r.Prioridad == "Baja")">Baja</option>
+                                        <option value="Media" selected="@(r.Prioridad == "Media")">Media</option>
+                                        <option value="Alta" selected="@(r.Prioridad == "Alta")">Alta</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">
+                                        Observaciones / Respuesta
+                                    </label>
+
+                                    <textarea name="observacionRespuesta"
+                                          rows="3"
+                                          class="form-control denuncia-input">@r.ObservacionRespuesta</textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer border-0">
+                                <button type="submit"
+                                        class="btn btn-dark w-50">
+                                    Guardar Cambios
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary w-50"
+                                        data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("filtroEstado").addEventListener("change", function () {
+            const estado = this.value;
+            const items = document.querySelectorAll(".admin-denuncia-item");
+
+            items.forEach(item => {
+                if (estado === "Todas" || item.dataset.estado === estado) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+    </script>
+}

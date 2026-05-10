@@ -65,9 +65,22 @@ namespace PortalInforObrasPublicas.Controllers
                     ?? HttpContext.TraceIdentifier
             });
         }
+        [Authorize]
         public IActionResult HistorialDenuncias()
         {
-            return View();
+            var email = HttpContext.Session.GetString("Usuario");
+
+            if (email == null)
+                return RedirectToAction("Login", "Account");
+
+            var idUsuario = _usuarioService.ObtenerIdPorEmail(email);
+
+            if (idUsuario == null)
+                return RedirectToAction("Login", "Account");
+
+            var reportes = _reporteService.ObtenerPorUsuario(idUsuario.Value);
+
+            return View(reportes);
         }
 
         public IActionResult Detalle(int id)

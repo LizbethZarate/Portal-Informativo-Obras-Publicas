@@ -42,5 +42,26 @@ namespace PortalInforObrasPublicas.Services
         {
             return _repo.ObtenerPorUsuario(idUsuario);
         }
+
+        public Reporte? ObtenerPorId(int id)
+        {
+            return _repo.ObtenerPorId(id);
+        }
+
+        public string ActualizarGestion(int idReporte, string estado, string prioridad, string? observacionRespuesta)
+        {
+            var reporte = _repo.ObtenerPorId(idReporte);
+
+            if (reporte == null)
+                return "La denuncia no existe.";
+
+            reporte.Estado = estado;
+            reporte.Prioridad = prioridad;
+            reporte.ObservacionRespuesta = observacionRespuesta;
+
+            _repo.Actualizar(reporte);
+
+            return "";
+        }
     }
 }

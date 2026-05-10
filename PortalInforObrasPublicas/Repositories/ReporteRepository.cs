@@ -20,6 +20,7 @@ namespace PortalInforObrasPublicas.Repositories
                 .Include(r => r.Obra)
                 .Include(r => r.Usuario)
                 .Include(r => r.Imagenes)
+                .OrderByDescending(r => r.Fecha)
                 .ToList();
         }
 
@@ -42,6 +43,20 @@ namespace PortalInforObrasPublicas.Repositories
                 .Where(r => r.IdUsuario == idUsuario)
                 .OrderByDescending(r => r.Fecha)
                 .ToList();
+        }
+        public Reporte? ObtenerPorId(int id)
+        {
+            return _context.Reportes
+                .Include(r => r.Obra)
+                .Include(r => r.Usuario)
+                .Include(r => r.Imagenes)
+                .FirstOrDefault(r => r.IdReporte == id);
+        }
+
+        public void Actualizar(Reporte reporte)
+        {
+            _context.Reportes.Update(reporte);
+            _context.SaveChanges();
         }
     }
 }

@@ -1,0 +1,268 @@
+﻿.denuncias-page {
+    background: #f8fafc;
+    min-height: calc(100vh - 80px);
+    padding: 36px 15px 80px;
+}
+
+.denuncias-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.admin-container {
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #020617;
+}
+
+.page-subtitle {
+    color: #475569;
+    margin-bottom: 28px;
+}
+
+.admin-title-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.admin-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.stat-box {
+    position: relative;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 18px;
+    min-height: 86px;
+}
+
+    .stat-box span {
+        display: block;
+        color: #475569;
+        font-size: 0.9rem;
+    }
+
+    .stat-box strong {
+        display: block;
+        font-size: 1.6rem;
+        color: #020617;
+    }
+
+    .stat-box i {
+        position: absolute;
+        right: 18px;
+        top: 28px;
+        font-size: 1.8rem;
+        color: #94a3b8;
+    }
+
+.stat-blue {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+    .stat-blue strong,
+    .stat-blue i {
+        color: #2563eb;
+    }
+
+.stat-green {
+    background: #ecfdf5;
+    border-color: #bbf7d0;
+}
+
+    .stat-green strong,
+    .stat-green i {
+        color: #16a34a;
+    }
+
+.stat-yellow {
+    background: #fffbeb;
+    border-color: #fde68a;
+}
+
+    .stat-yellow strong,
+    .stat-yellow i {
+        color: #b45309;
+    }
+
+.filter-box {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.denuncia-filter {
+    width: 210px;
+    background: #f1f5f9;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.denuncia-item {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 24px;
+    margin-bottom: 18px;
+}
+
+.denuncia-img-box {
+    width: 190px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.denuncia-img {
+    width: 190px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.denuncia-content {
+    flex: 1;
+}
+
+    .denuncia-content h5 {
+        font-weight: 800;
+        color: #020617;
+    }
+
+.denuncia-date {
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.estado-pill,
+.prioridad-pill {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.badge-proceso {
+    color: #0057ff;
+    background: #dbeafe;
+    border: 1px solid #93c5fd;
+}
+
+.badge-pendiente {
+    color: #92400e;
+    background: #fef3c7;
+    border: 1px solid #fcd34d;
+}
+
+.badge-resuelto {
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #86efac;
+}
+
+.prioridad-pill {
+    color: #dc2626;
+    background: #fff;
+    border: 1px solid #fca5a5;
+}
+
+.respuesta-box {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 14px 16px;
+    color: #1d4ed8;
+}
+
+    .respuesta-box p {
+        margin: 6px 0 0;
+    }
+
+.empty-box {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+}
+
+.gestion-modal {
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+}
+
+.modal-summary {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+    .modal-summary h6 {
+        font-weight: 800;
+    }
+
+    .modal-summary p {
+        color: #334155;
+        margin-bottom: 8px;
+    }
+
+.modal-evidence {
+    width: 140px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.denuncia-input {
+    border: none;
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+@media (max-width: 768px) {
+    .denuncia-item {
+        flex-direction: column;
+    }
+
+    .denuncia-img-box,
+    .denuncia-img {
+        width: 100%;
+    }
+
+    .filter-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .denuncia-filter {
+        width: 100%;
+    }
+}

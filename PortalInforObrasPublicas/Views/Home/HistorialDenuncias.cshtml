@@ -1,6 +1,118 @@
-﻿@{
-    ViewData["Title"] = "Mi Historial";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@model List<PortalInforObrasPublicas.Models.Reporte>
 
-<p>Use this page to detail your site's privacy policy.</p>
+@{
+    ViewData["Title"] = "Mis Denuncias";
+
+    var total = Model.Count;
+    var enProceso = Model.Count(r => r.Estado == "En Proceso" || r.Estado == "Pendiente");
+    var resueltas = Model.Count(r => r.Estado == "Resuelto");
+}
+
+<link rel="stylesheet" href="~/css/denuncias-panel.css" asp-append-version="true" />
+
+<div class="denuncias-page">
+    <div class="denuncias-container">
+
+        <h1 class="page-title">Mis Denuncias</h1>
+        <p class="page-subtitle">Historial de reportes realizados sobre obras públicas</p>
+
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["Mensaje"]
+            </div>
+        }
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="stat-box">
+                    <span>Total de Denuncias</span>
+                    <strong>@total</strong>
+                    <i class="bi bi-file-earmark-text"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-box stat-blue">
+                    <span>En Proceso</span>
+                    <strong>@enProceso</strong>
+                    <i class="bi bi-exclamation-circle"></i>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="stat-box stat-green">
+                    <span>Resueltas</span>
+                    <strong>@resueltas</strong>
+                    <i class="bi bi-check-circle"></i>
+                </div>
+            </div>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="empty-box">
+                <h5>No tienes denuncias registradas</h5>
+                <p>Cuando registres una denuncia aparecerá en esta sección.</p>
+            </div>
+        }
+
+        @foreach (var r in Model)
+        {
+            var imagen = r.Imagenes != null && r.Imagenes.Any()
+            ? r.Imagenes.First().RutaImagen
+            : "https://via.placeholder.com/300x220";
+
+            var estadoClass = r.Estado == "Resuelto" ? "badge-resuelto" :
+            r.Estado == "En Proceso" ? "badge-proceso" :
+            "badge-pendiente";
+
+            <div class="denuncia-item">
+                <img src="@imagen" class="denuncia-img" />
+
+                <div class="denuncia-content">
+                    <div class="d-flex justify-content-between gap-3">
+                        <div>
+                            <h5>@r.Obra?.Nombre</h5>
+
+                            <p class="denuncia-date">
+                                <i class="bi bi-calendar"></i>
+                                Registrado el @r.Fecha.ToString("dd/MM/yyyy")
+                            </p>
+                        </div>
+
+                        <span class="estado-pill @estadoClass">
+                            @r.Estado
+                        </span>
+                    </div>
+
+                    <p>@r.Descripcion</p>
+
+                    <p class="mb-2">
+                        Prioridad:
+                        <span class="prioridad-pill">
+                            @r.Prioridad
+                        </span>
+                    </p>
+
+                    @if (!string.IsNullOrWhiteSpace(r.ObservacionRespuesta))
+                    {
+                        <div class="respuesta-box">
+                            <strong>Respuesta de la Municipalidad:</strong>
+                            <p>@r.ObservacionRespuesta</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="text-center mt-4">
+            <a asp-controller="Home"
+               asp-action="NuevaDenuncia"
+               class="btn btn-dark px-4">
+                Registrar Nueva Denuncia
+            </a>
+        </div>
+
+    </div>
+</div>

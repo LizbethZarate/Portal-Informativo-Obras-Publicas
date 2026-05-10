@@ -21,6 +21,10 @@ namespace PortalInforObrasPublicas.Models
 
         public string Estado { get; set; } = "Pendiente";
 
+        public string Prioridad { get; set; } = "Media";
+
+        public string? ObservacionRespuesta { get; set; }
+
         public int? IdUsuario { get; set; }
 
         [ForeignKey("IdUsuario")]

@@ -77,6 +77,8 @@ namespace PortalInforObrasPublicas.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prioridad = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ObservacionRespuesta = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdUsuario = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

@@ -8,5 +8,7 @@ namespace PortalInforObrasPublicas.Interfaces
         void Crear(Reporte reporte);
         bool ExisteObra(int idObra);
         List<Reporte> ObtenerPorUsuario(int idUsuario);
+        Reporte? ObtenerPorId(int id);
+        void Actualizar(Reporte reporte);
     }
 }

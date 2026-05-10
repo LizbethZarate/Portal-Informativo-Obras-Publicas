@@ -12,7 +12,7 @@ using PortalInforObrasPublicas.Data;
 namespace PortalInforObrasPublicas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260510085335_initial")]
+    [Migration("20260510100331_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -111,6 +111,13 @@ namespace PortalInforObrasPublicas.Migrations
 
                     b.Property<int?>("IdUsuario")
                         .HasColumnType("int");
+
+                    b.Property<string>("ObservacionRespuesta")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Prioridad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdReporte");
 

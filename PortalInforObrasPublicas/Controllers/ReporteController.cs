@@ -91,5 +91,19 @@ namespace PortalInforObrasPublicas.Controllers
                 return View();
             }
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Gestionar(int idReporte, string estado, string prioridad, string? observacionRespuesta)
+        {
+            var mensaje = _service.ActualizarGestion(idReporte, estado, prioridad, observacionRespuesta);
+
+            if (!string.IsNullOrEmpty(mensaje))
+                TempData["Error"] = mensaje;
+            else
+                TempData["Mensaje"] = "Denuncia actualizada correctamente.";
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
