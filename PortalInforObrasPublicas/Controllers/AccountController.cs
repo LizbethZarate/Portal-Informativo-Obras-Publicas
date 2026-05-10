@@ -29,7 +29,7 @@ namespace PortalInforObrasPublicas.Controllers
             {
                 var usuario = _usuarioService.ValidarUsuario(
                     model.Email,
-                    model.PasswordHash);
+                    model.Password);
 
                 if (usuario != null)
                 {
@@ -82,7 +82,7 @@ namespace PortalInforObrasPublicas.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.PasswordHash != ConfirmPassword)
+                if (model.Password != ConfirmPassword)
                 {
                     ModelState.AddModelError("", "Las contraseñas no coinciden.");
                     return View(model);

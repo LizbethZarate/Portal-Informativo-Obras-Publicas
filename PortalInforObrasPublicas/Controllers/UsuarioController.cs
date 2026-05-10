@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PortalInforObrasPublicas.Data;
 
 namespace PortalInforObrasPublicas.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UsuarioController : Controller
     {
         private readonly AppDbContext _context;

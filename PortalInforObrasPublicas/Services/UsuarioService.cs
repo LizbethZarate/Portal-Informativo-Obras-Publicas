@@ -38,12 +38,25 @@ namespace PortalInforObrasPublicas.Services
             usuario.Rol = "Ciudadano";
 
             // Hash del password antes de guardar
-            usuario.PasswordHash = _hasher.HashPassword(usuario, usuario.PasswordHash);
+            usuario.PasswordHash = _hasher.HashPassword(usuario, usuario.Password);
 
             _repo.Agregar(usuario);
         }
 
         public Usuario? ObtenerPorEmail(string email) =>
             _repo.ObtenerPorEmail(email);
+
+        public void RegistrarAdministrador(Usuario usuario)
+        {
+            if (_repo.ExisteEmail(usuario.Email))
+                throw new InvalidOperationException("El correo ya está registrado.");
+
+            usuario.Rol = "Administrador";
+
+            usuario.PasswordHash =
+                _hasher.HashPassword(usuario, usuario.PasswordHash);
+
+            _repo.Agregar(usuario);
+        }
     }
 }

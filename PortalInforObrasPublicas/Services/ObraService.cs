@@ -68,5 +68,31 @@ namespace PortalInforObrasPublicas.Services
         {
             _repo.Eliminar(id);
         }
+
+        public string ValidarObra(Obra obra)
+        {
+            if (obra.Presupuesto < 0)
+                return "El presupuesto no puede ser negativo.";
+
+            if (obra.FechaFin < obra.FechaInicio)
+                return "La fecha fin no puede ser menor.";
+
+            var estadosValidos = new[]
+            {
+        "Pendiente",
+        "En ejecución",
+        "Finalizada"
+    };
+
+            if (!estadosValidos.Contains(obra.Estado))
+                return "Estado inválido.";
+
+            return "";
+        }
+
+        public void Crear(Obra obra)
+        {
+            _repo.Crear(obra);
+        }
     }
 }

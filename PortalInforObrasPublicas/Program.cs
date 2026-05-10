@@ -69,6 +69,15 @@ namespace PortalInforObrasPublicas
                 name: "default",
                 pattern: "{controller=Account}/{action=Login}/{id?}");
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var context = services.GetRequiredService<AppDbContext>();
+
+                DbInitializer.Inicializar(context);
+            }
+
             app.Run();
         }
     }

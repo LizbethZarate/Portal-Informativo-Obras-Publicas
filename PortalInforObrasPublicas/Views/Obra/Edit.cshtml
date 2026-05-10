@@ -1,44 +1,118 @@
 ﻿@model PortalInforObrasPublicas.Models.Obra
 
-<h2>Editar Obra</h2>
+<div class="container mt-4">
 
-<form asp-action="Edit" method="post">
-    @Html.AntiForgeryToken()
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-    <input type="hidden" asp-for="IdObra" />
+            <h2 class="mb-4">Editar Obra</h2>
 
-    <div class="mb-3">
-        <label>Nombre</label>
-        <input asp-for="Nombre" class="form-control" />
+            <form asp-action="Edit"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" asp-for="IdObra" />
+
+                <div asp-validation-summary="All"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input asp-for="Nombre"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Código SNIP</label>
+                    <input asp-for="CodigoSNIP"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Ubicación</label>
+                    <input asp-for="Ubicacion"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Estado</label>
+
+                    <select asp-for="Estado"
+                            class="form-select">
+
+                        <option>Pendiente</option>
+                        <option>En ejecución</option>
+                        <option>Finalizada</option>
+
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Presupuesto</label>
+
+                    <input asp-for="Presupuesto"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Fecha Inicio</label>
+
+                    <input asp-for="FechaInicio"
+                           type="date"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Fecha Fin</label>
+
+                    <input asp-for="FechaFin"
+                           type="date"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+
+                    <label>Nueva Imagen</label>
+
+                    <input type="file"
+                           name="imagen"
+                           class="form-control" />
+
+                </div>
+
+                @if (Model.Imagenes != null &&
+                                Model.Imagenes.Any())
+                {
+                    <div class="mb-3">
+
+                        <p>Imagen actual:</p>
+
+                        <img src="@Model.Imagenes.First().RutaImagen"
+                             width="200"
+                             style="border-radius:10px;" />
+
+                    </div>
+                }
+
+                <button type="submit"
+                        class="btn btn-warning">
+
+                    Actualizar
+
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Cancelar
+
+                </a>
+
+            </form>
+
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label>Ubicación</label>
-        <input asp-for="Ubicacion" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Estado</label>
-        <input asp-for="Estado" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Presupuesto</label>
-        <input asp-for="Presupuesto" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Fecha Inicio</label>
-        <input asp-for="FechaInicio" type="date" class="form-control"
-               value="@Model.FechaInicio.ToString("yyyy-MM-dd")" />
-    </div>
-
-    <div class="mb-3">
-        <label>Fecha Fin</label>
-        <input asp-for="FechaFin" type="date" class="form-control"
-               value="@(Model.FechaFin?.ToString("yyyy-MM-dd"))" />
-    </div>
-
-    <button type="submit" class="btn btn-warning">Actualizar</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-</form>
+</div>

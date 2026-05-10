@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PortalInforObrasPublicas.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class ReporteController : Controller
     {
         // GET: ReporteController

@@ -1,4 +1,5 @@
-﻿using PortalInforObrasPublicas.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PortalInforObrasPublicas.Data;
 using PortalInforObrasPublicas.Interfaces;
 using PortalInforObrasPublicas.Models;
 
@@ -15,12 +16,16 @@ namespace PortalInforObrasPublicas.Repositories
 
         public List<Obra> ObtenerTodas()
         {
-            return _context.Obras.ToList();
+            return _context.Obras
+                .Include(o => o.Imagenes)
+                .ToList();
         }
 
         public Obra ObtenerPorId(int id)
         {
-            return _context.Obras.Find(id);
+            return _context.Obras
+                .Include(o => o.Imagenes)
+                .FirstOrDefault(o => o.IdObra == id);
         }
 
         public void Crear(Obra obra)

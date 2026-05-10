@@ -1,41 +1,81 @@
 ﻿@model PortalInforObrasPublicas.Models.Obra
 
-<h2>Nueva Obra</h2>
+<div class="container mt-4">
 
-<form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-    <div asp-validation-summary="All" class="text-danger"></div>
+            <h2 class="mb-4">Nueva Obra</h2>
 
-    <div class="mb-3">
-        <label>Nombre</label>
-        <input asp-for="Nombre" class="form-control" />
+            <form asp-action="Create"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="All"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input asp-for="Nombre" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Código SNIP</label>
+                    <input asp-for="CodigoSNIP" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Ubicación</label>
+                    <input asp-for="Ubicacion" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Estado</label>
+
+                    <select asp-for="Estado" class="form-select">
+                        <option>Pendiente</option>
+                        <option>En ejecución</option>
+                        <option>Finalizada</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label>Presupuesto</label>
+                    <input asp-for="Presupuesto"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Fecha Inicio</label>
+                    <input asp-for="FechaInicio"
+                           type="date"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Fecha Fin</label>
+                    <input asp-for="FechaFin"
+                           type="date"
+                           class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label>Imagen de la obra</label>
+
+                    <input type="file"
+                           name="imagen"
+                           class="form-control" />
+                </div>
+
+                <button class="btn btn-success">
+                    Guardar
+                </button>
+
+            </form>
+
+        </div>
     </div>
 
-    <div class="mb-3">
-        <label>Ubicación</label>
-        <input asp-for="Ubicacion" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Estado</label>
-        <input asp-for="Estado" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Presupuesto</label>
-        <input asp-for="Presupuesto" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Fecha Inicio</label>
-        <input asp-for="FechaInicio" type="date" class="form-control" />
-    </div>
-
-    <div class="mb-3">
-        <label>Fecha Fin</label>
-        <input asp-for="FechaFin" type="date" class="form-control" />
-    </div>
-
-    <button class="btn btn-success">Guardar</button>
-</form>
+</div>

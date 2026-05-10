@@ -12,7 +12,7 @@ using PortalInforObrasPublicas.Data;
 namespace PortalInforObrasPublicas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260509064327_initial")]
+    [Migration("20260510033858_initial")]
     partial class initial
     {
         /// <inheritdoc />
