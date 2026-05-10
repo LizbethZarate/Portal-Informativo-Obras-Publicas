@@ -90,5 +90,19 @@ namespace PortalInforObrasPublicas.Controllers
             _service.Eliminar(id);
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Obra/Detalle/5
+        public IActionResult Detalle(int id)
+        {
+            var obra = _service.ObtenerPorId(id);
+
+            if (obra == null)
+            {
+                return NotFound();
+            }
+
+            // Retorna a la vista específica "obra-detalle.cshtml" pasando el modelo
+            return View("~/Views/Obra/Obra-detalle/obra-detalle.cshtml", obra);
+        }
     }
 }

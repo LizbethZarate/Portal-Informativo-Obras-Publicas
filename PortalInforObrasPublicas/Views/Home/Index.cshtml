@@ -1,4 +1,6 @@
-﻿@{
+﻿@model List<PortalInforObrasPublicas.Models.Obra>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -41,6 +43,70 @@
 
 <div class="container mt-5">
     <h4 class="fw-bold">Obras Públicas del Distrito</h4>
+
+    @* --- COMPONENTE: LISTADO DE OBRAS --- *@
+    <div class="obras-container">
+        @foreach (var obra in Model)
+        {
+            <article class="obra-item" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px;">
+                <span class="status">@obra.Estado</span>
+            <h3>@obra.Nombre</h3>
+            <p>📍 @obra.Ubicacion</p>
+
+            <div class="info-avance">
+                <p>Avance: <strong>45%</strong></p>
+                <p>Presupuesto: <strong>S/ @obra.Presupuesto</strong></p>
+            </div>
+
+            <a asp-controller="Obra"
+               asp-action="Detalle"
+               asp-route-id="@obra.IdObra"
+               class="btn-detalle"
+               style="display: inline-block; padding: 10px; background: #000; color: #fff; text-decoration: none;">
+                Ver Detalles
+            </a>
+        </article>
+        }
+
+        <article class="obra-item" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px;">
+            <span class="status">En Ejecución</span>
+            <h3>Construcción de Parque Recreativo Los Cedros</h3>
+            <p>📍 Urbanización Los Cedros</p>
+
+            <div class="info-avance">
+                <p>Avance: <strong>30%</strong></p>
+                <p>Presupuesto: <strong>S/ 1.20M</strong></p>
+            </div>
+
+            <a asp-controller="Obras"
+               asp-action="Detalle"
+               asp-route-id="2"
+               class="btn-detalle"
+               style="display: inline-block; padding: 10px; background: #000; color: #fff; text-decoration: none;">
+                Ver Detalles
+            </a>
+        </article>
+
+        <article class="obra-item" style="border: 1px solid #ccc; padding: 15px; margin-bottom: 10px;">
+            <span class="status">Planificación</span>
+            <h3>Remodelación de Mercado Municipal</h3>
+            <p>📍 Calle Real 456</p>
+
+            <div class="info-avance">
+                <p>Avance: <strong>5%</strong></p>
+                <p>Presupuesto: <strong>S/ 3.50M</strong></p>
+            </div>
+
+            <a asp-controller="Obras"
+               asp-action="Detalle"
+               asp-route-id="3"
+               class="btn-detalle"
+               style="display: inline-block; padding: 10px; background: #000; color: #fff; text-decoration: none;">
+                Ver Detalles
+            </a>
+        </article>
+
+    </div>
 
     @* <div class="row mt-4">
         <div class="col-md-4">
