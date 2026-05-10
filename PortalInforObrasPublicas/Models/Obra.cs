@@ -26,6 +26,9 @@ namespace PortalInforObrasPublicas.Models
 
         public DateTime? FechaFin { get; set; }
 
+        [Range(0, 100)]
+        public int Avance { get; set; }
+
         public List<Reporte>? Reportes { get; set; }
         public List<ObraImagen>? Imagenes { get; set; }
     }

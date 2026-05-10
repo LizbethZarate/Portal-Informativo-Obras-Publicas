@@ -30,6 +30,9 @@ namespace PortalInforObrasPublicas.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdObra"));
 
+                    b.Property<int>("Avance")
+                        .HasColumnType("int");
+
                     b.Property<string>("CodigoSNIP")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

@@ -111,6 +111,7 @@ namespace PortalInforObrasPublicas.Controllers
             obraBD.Ubicacion = obra.Ubicacion;
             obraBD.Estado = obra.Estado;
             obraBD.Presupuesto = obra.Presupuesto;
+            obraBD.Avance = obra.Avance;
             obraBD.FechaInicio = obra.FechaInicio;
             obraBD.FechaFin = obra.FechaFin;
 

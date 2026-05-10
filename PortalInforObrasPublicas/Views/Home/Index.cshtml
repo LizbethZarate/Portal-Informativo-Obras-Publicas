@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<link rel="stylesheet" href="~/css/obra.css" />
+<link rel="stylesheet" href="~/css/obra.css" asp-append-version="true" />
 
 <div class="hero">
     <div class="container">
@@ -52,54 +52,62 @@
 
         @foreach (var obra in Model)
         {
-            <div class="col-md-4 mb-4">
+            var badgeClass = obra.Estado == "En ejecución" ? "estado-ejecucion" :
+            obra.Estado == "Finalizada" ? "estado-finalizada" :
+            "estado-pendiente";
 
+            var avanceClass = obra.Estado == "En ejecución" ? "avance-ejecucion" :
+            obra.Estado == "Finalizada" ? "avance-finalizada" :
+            "avance-pendiente";
+
+            <div class="col-md-4 mb-4">
                 <div class="card obra-card h-100">
 
-                    @if (obra.Imagenes != null &&
-                                    obra.Imagenes.Any())
+                    @if (obra.Imagenes != null && obra.Imagenes.Any())
                     {
                         <img src="@obra.Imagenes.First().RutaImagen"
-                             class="card-img-top"
-                             style="height:220px; object-fit:cover;" />
+                             class="card-img-top obra-img" />
                     }
                     else
                     {
-                        <img src="https://via.placeholder.com/400x200"
-                             class="card-img-top" />
+                        <img src="https://via.placeholder.com/400x220"
+                             class="card-img-top obra-img" />
                     }
 
-                    <div class="card-body">
+                    <div class="card-body obra-body">
 
-                        <span class="badge bg-primary">
+                        <span class="estado-badge @badgeClass">
                             @obra.Estado
                         </span>
 
-                        <h5 class="mt-3">
+                        <h5 class="obra-title mt-3">
                             @obra.Nombre
                         </h5>
 
-                        <p class="text-muted">
+                        <p class="obra-location">
+                            <i class="bi bi-geo-alt"></i>
                             @obra.Ubicacion
                         </p>
 
-                        <p>
-                            <strong>Presupuesto:</strong>
-                            S/ @obra.Presupuesto
-                        </p>
+                        <div class="avance-box">
+                            <div class="d-flex justify-content-between">
+                                <span>Avance</span>
+                                <strong>@obra.Avance%</strong>
+                            </div>
 
-                        <p>
-                            <strong>Inicio:</strong>
-                            @obra.FechaInicio.ToString("dd/MM/yyyy")
-                        </p>
+                            <div class="avance-barra">
+                                <div class="avance-progreso @avanceClass"
+                                     style="width:@obra.Avance%">
+                                </div>
+                            </div>
+                        </div>
 
-                        @if (obra.FechaFin != null)
-                        {
-                            <p>
-                                <strong>Fin:</strong>
-                                @obra.FechaFin?.ToString("dd/MM/yyyy")
-                            </p>
-                        }
+                        <div class="presupuesto-box">
+                            <span>Presupuesto:</span>
+                            <strong>S/ @obra.Presupuesto.ToString("N2")</strong>
+                        </div>
+
+                        <hr />
 
                         <a href="#"
                            class="btn btn-dark w-100">
@@ -108,7 +116,6 @@
 
                     </div>
                 </div>
-
             </div>
         }
 

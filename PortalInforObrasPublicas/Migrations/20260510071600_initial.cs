@@ -23,7 +23,8 @@ namespace PortalInforObrasPublicas.Migrations
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Presupuesto = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Avance = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
