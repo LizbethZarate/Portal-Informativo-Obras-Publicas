@@ -17,6 +17,14 @@
         <div class="card p-4" style="max-width: 400px; width: 100%;">
             <h3 class="text-center mb-2">Iniciar Sesión</h3>
             <p class="text-center text-muted mb-4">Accede al sistema de obras públicas</p>
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
             <form asp-action="Login" method="post">
 
                 <div asp-validation-summary="All" class="text-danger mb-3"></div>
@@ -31,6 +39,14 @@
                     <input asp-for="Password"
                            type="password"
                            class="form-control" />
+                </div>
+
+                <div class="text-end mb-3">
+                    <a asp-controller="Account"
+                       asp-action="RecuperarPassword"
+                       class="text-decoration-none">
+                        ¿Olvidaste tu contraseña?
+                    </a>
                 </div>
 
                 <button type="submit" class="btn btn-dark w-100 mb-2">

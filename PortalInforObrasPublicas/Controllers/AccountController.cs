@@ -107,5 +107,74 @@ namespace PortalInforObrasPublicas.Controllers
 
             return RedirectToAction("Login");
         }
+
+        [HttpGet]
+        public IActionResult RecuperarPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RecuperarPassword(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                ModelState.AddModelError("", "Ingresa tu correo electrónico.");
+                return View();
+            }
+
+            var token = _usuarioService.GenerarTokenRecuperacion(email);
+
+            if (string.IsNullOrEmpty(token))
+            {
+                ModelState.AddModelError("", "No existe una cuenta con ese correo.");
+                return View();
+            }
+
+            var enlace = Url.Action(
+                "RestablecerPassword",
+                "Account",
+                new { token = token },
+                Request.Scheme);
+
+            ViewBag.EnlaceRecuperacion = enlace;
+            ViewBag.Mensaje = "Se generó el enlace de recuperación.";
+
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult RestablecerPassword(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return RedirectToAction("Login");
+
+            ViewBag.Token = token;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RestablecerPassword(
+            string token,
+            string nuevaPassword,
+            string confirmarPassword)
+        {
+            var mensaje = _usuarioService.RestablecerPassword(
+                token,
+                nuevaPassword,
+                confirmarPassword);
+
+            if (!string.IsNullOrEmpty(mensaje))
+            {
+                ViewBag.Token = token;
+                ModelState.AddModelError("", mensaje);
+                return View();
+            }
+
+            TempData["Mensaje"] = "Contraseña actualizada correctamente. Ahora puedes iniciar sesión.";
+            return RedirectToAction("Login");
+        }
     }
 }

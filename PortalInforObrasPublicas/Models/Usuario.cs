@@ -13,5 +13,7 @@ namespace PortalInforObrasPublicas.Models
         public string Password { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Rol { get; set; } = "Ciudadano";
+        public string? ResetPasswordToken { get; set; }
+        public DateTime? ResetPasswordTokenExpira { get; set; }
     }
 }

@@ -34,5 +34,17 @@ namespace PortalInforObrasPublicas.Repositories
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
         }
+
+        public Usuario? ObtenerPorTokenRecuperacion(string token)
+        {
+            return _context.Usuarios
+                .FirstOrDefault(u => u.ResetPasswordToken == token);
+        }
+
+        public void Actualizar(Usuario usuario)
+        {
+            _context.Usuarios.Update(usuario);
+            _context.SaveChanges();
+        }
     }
 }

@@ -17,6 +17,10 @@
         <div class="card p-4" style="max-width: 400px; width: 100%;">
             <h3 class="text-center mb-2">Crear Cuenta</h3>
             <p class="text-center text-muted mb-4">Regístrate para reportar problemas en obras públicas</p>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+            }
             <form asp-action="Register" method="post">
                 <div class="mb-3">
                     <label class="form-label">Nombre Completo</label>

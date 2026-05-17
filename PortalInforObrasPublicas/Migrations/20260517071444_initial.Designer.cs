@@ -12,7 +12,7 @@ using PortalInforObrasPublicas.Data;
 namespace PortalInforObrasPublicas.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260510100331_initial")]
+    [Migration("20260517071444_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -169,6 +169,12 @@ namespace PortalInforObrasPublicas.Migrations
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResetPasswordToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ResetPasswordTokenExpira")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Rol")
                         .IsRequired()

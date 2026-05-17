@@ -63,5 +63,53 @@ namespace PortalInforObrasPublicas.Services
             var usuario = _repo.ObtenerPorEmail(email);
             return usuario?.IdUsuario;
         }
+
+        public string GenerarTokenRecuperacion(string email)
+        {
+            var usuario = _repo.ObtenerPorEmail(email);
+
+            if (usuario == null)
+                return "";
+
+            var token = Guid.NewGuid().ToString();
+
+            usuario.ResetPasswordToken = token;
+            usuario.ResetPasswordTokenExpira = DateTime.Now.AddMinutes(30);
+
+            _repo.Actualizar(usuario);
+
+            return token;
+        }
+
+        public string RestablecerPassword(string token, string nuevaPassword, string confirmarPassword)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+                return "Token inválido.";
+
+            if (string.IsNullOrWhiteSpace(nuevaPassword))
+                return "La nueva contraseña es obligatoria.";
+
+            if (nuevaPassword.Length < 6)
+                return "La contraseña debe tener mínimo 6 caracteres.";
+
+            if (nuevaPassword != confirmarPassword)
+                return "Las contraseñas no coinciden.";
+
+            var usuario = _repo.ObtenerPorTokenRecuperacion(token);
+
+            if (usuario == null)
+                return "Token inválido.";
+
+            if (usuario.ResetPasswordTokenExpira < DateTime.Now)
+                return "El enlace de recuperación expiró.";
+
+            usuario.PasswordHash = _hasher.HashPassword(usuario, nuevaPassword);
+            usuario.ResetPasswordToken = null;
+            usuario.ResetPasswordTokenExpira = null;
+
+            _repo.Actualizar(usuario);
+
+            return "";
+        }
     }
 }

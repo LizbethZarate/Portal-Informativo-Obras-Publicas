@@ -7,5 +7,7 @@ namespace PortalInforObrasPublicas.Interfaces
         Usuario? ObtenerPorEmail(string email);
         bool ExisteEmail(string email);
         void Agregar(Usuario usuario);
+        Usuario? ObtenerPorTokenRecuperacion(string token);
+        void Actualizar(Usuario usuario);
     }
 }
